@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediFlow — Smart Digital Pharmacy & Healthcare Platform</title>
+  <meta name="description" content="MediFlow is a modern healthcare web application featuring online medicine ordering, prescription scanning, clinical pharmacist guidance, and live delivery tracking.">
+  
+  <!-- Modern Typography from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Telemetry & Status Bar: Top-Left Live User Count & Web Ping -->
+  <div class="site-header-wrapper">
+    <div class="top-telemetry-bar">
+      <div class="container top-telemetry-inner">
+        <div class="telemetry-top-left">
+          <div class="telemetry-chip live-users-chip" id="btn-open-telemetry" onclick="window.mediFlowApp.toggleTelemetryModal(true)" title="Click to view Live Patients & Network Activity Telemetry">
+            <span class="live-dot-pulse"></span>
+            <span class="telemetry-label">Active Users:</span>
+            <strong class="telemetry-count" id="live-user-count">1,842</strong>
+            <span class="telemetry-subbadge">Live</span>
+            <span class="user-action-tick" id="user-action-indicator" style="display: none;">+1 You</span>
+          </div>
+
+          <div class="telemetry-separator">•</div>
+
+          <div class="telemetry-chip ping-chip" id="ping-telemetry-chip" title="Live Web Ping & Server Latency">
+            <span class="ping-signal-icon">⚡</span>
+            <span class="telemetry-label">Web Ping:</span>
+            <strong class="telemetry-ping-val" id="live-ping-val">22ms</strong>
+            <span class="ping-quality-tag" id="live-ping-quality">Optimal</span>
+          </div>
+        </div>
+
+        <div class="telemetry-top-right">
+          <span class="telemetry-pill-network">
+            <span class="live-dot-pulse" style="background: #06b6d4;"></span> 4 Partner Pharmacies Synced
+          </span>
+          <span class="telemetry-pill-security">🔒 256-Bit Healthcare SSL</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand-logo" onclick="window.mediFlowApp.switchSection('shop')">
+          <div class="logo-icon">➕</div>
+          <div class="brand-text">
+            <h1>MediFlow</h1>
+            <span>AI Pharmacy Platform</span>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <button class="nav-item active" data-target="shop">
+            <span class="icon">💊</span> Buy Medicines
+          </button>
+          <button class="nav-item" data-target="scanner">
+            <span class="icon">🔍</span> AI Scanner
+          </button>
+          <button class="nav-item" data-target="chat">
+            <span class="icon">🤖</span> AI Pharmacist
+          </button>
+          <button class="nav-item" data-target="locator">
+            <span class="icon">📍</span> Where to Get
+          </button>
+          <button class="nav-item" data-target="delivery">
+            <span class="icon">🚚</span> Live Delivery
+          </button>
+          <button class="nav-item" data-target="schedule">
+            <span class="icon">⏰</span> Dosage Schedule
+          </button>
+        </nav>
+
+        <div class="header-actions">
+          <button class="btn-action-primary" onclick="window.mediFlowApp.switchSection('scanner')" title="Scan Prescription">
+            <span>⚡</span> Try AI Scanner
+          </button>
+
+          <button class="btn-cart" id="btn-open-cart" aria-label="Open Shopping Cart">
+            <span>🛒</span>
+            <span class="cart-badge" id="cart-count-badge">2</span>
+          </button>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-tagline">
+            <span class="badge-pulse"></span>
+            Next-Gen AI Healthcare • Verified Pharmacy Hub
+          </div>
+          <h1 class="hero-title">
+            Smart Pharmacy, <br>
+            <span class="gradient-text">Instant Delivery & AI Clarity</span>
+          </h1>
+          <p class="hero-subtitle">
+            MediFlow simplifies medicine discovery with AI-powered prescription & pill blister scanning, 
+            24/7 intelligent AI pharmacist doubt clearing, local stock locators, and ultra-fast 15-minute delivery tracking.
+          </p>
+          <div class="hero-cta-group">
+            <button class="btn-primary" onclick="window.mediFlowApp.switchSection('shop')">
+              <span>💊</span> Browse Medicines
+            </button>
+            <button class="btn-secondary" onclick="window.mediFlowApp.switchSection('scanner')">
+              <span>🔍</span> Try AI Scanner
+            </button>
+            <button class="btn-secondary" onclick="window.mediFlowApp.switchSection('chat')">
+              <span>🤖</span> Ask AI Pharmacist
+            </button>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-item">
+              <h3>15k+</h3>
+              <p>Meds Cataloged</p>
+            </div>
+            <div class="stat-item">
+              <h3>99.4%</h3>
+              <p>AI Scan Accuracy</p>
+            </div>
+            <div class="stat-item">
+              <h3>15 Min</h3>
+              <p>Express Dispatch</p>
+            </div>
+            <div class="stat-item">
+              <h3>24/7</h3>
+              <p>AI Pharmacist</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual-card">
+          <img src="assets/hero_banner.jpg?v=2" alt="MediFlow Smart Digital Pharmacy Center" id="hero-banner-image">
+          <div class="hero-card-overlay">
+            <div>
+              <div class="live-pill-tag">
+                <span class="badge-pulse"></span> 4 Partner Pharmacies Active Nearby
+              </div>
+              <p style="font-size: 0.8rem; color: #cbd5e1; margin-top: 0.4rem;">
+                Campus Hub • Apollo • MedPlus • Wellness Forever
+              </p>
+            </div>
+            <button class="btn-primary" style="padding: 0.45rem 0.95rem; font-size: 0.8rem;" onclick="window.mediFlowApp.switchSection('delivery')">
+              Track Live ➔
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Action Highlights Strip -->
+  <div class="container">
+    <div class="quick-action-strip">
+      <div class="action-card" data-target="scanner">
+        <div class="action-card-icon icon-cyan">📷</div>
+        <div class="action-card-content">
+          <h4>AI Medicine Scanner</h4>
+          <p>Scan prescriptions & pill strips instantly</p>
+        </div>
+      </div>
+
+      <div class="action-card" data-target="chat">
+        <div class="action-card-icon icon-teal">🤖</div>
+        <div class="action-card-content">
+          <h4>AI Pharmacist Assistant</h4>
+          <p>Clear doubts & check drug interactions</p>
+        </div>
+      </div>
+
+      <div class="action-card" data-target="locator">
+        <div class="action-card-icon icon-purple">📍</div>
+        <div class="action-card-content">
+          <h4>Where to Get (Stock Finder)</h4>
+          <p>Check real-time stock at nearby stores</p>
+        </div>
+      </div>
+
+      <div class="action-card" data-target="delivery">
+        <div class="action-card-icon icon-emerald">⚡</div>
+        <div class="action-card-content">
+          <h4>Express 15-Min Delivery</h4>
+          <p>Live GPS map & OTP order tracking</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN APP SECTIONS -->
+  <main class="container">
+
+    <!-- Section 1: Buy Medicines (Shop & Ordering) -->
+    <section class="section active" id="section-shop">
+      <div class="section-header">
+        <div class="title-group">
+          <h2><span>💊</span> Medicine Ordering Facility</h2>
+          <p>Authentic medications with verified salt compositions, generic savings, and rapid delivery.</p>
+        </div>
+        <div class="badge badge-emerald badge-pulse">Verified Stock Sync</div>
+      </div>
+
+      <!-- Shop Toolbar: Search & Categories -->
+      <div class="shop-toolbar">
+        <div class="search-bar-wrapper">
+          <span class="search-icon-pos">🔍</span>
+          <input type="text" id="medicine-search" class="search-input" placeholder="Search by brand (Dolo, Augmentin), generic salt (Paracetamol), or ailment...">
+        </div>
+
+        <div class="category-filter-chips">
+          <button class="filter-chip active" data-category="all">All Medicines</button>
+          <button class="filter-chip" data-category="fever">Fever & Pain</button>
+          <button class="filter-chip" data-category="antibiotics">Antibiotics (Rx)</button>
+          <button class="filter-chip" data-category="digestive">Digestion & Acidity</button>
+          <button class="filter-chip" data-category="allergy">Allergy & Cold</button>
+          <button class="filter-chip" data-category="chronic">Chronic Care (BP/Diabetes)</button>
+          <button class="filter-chip" data-category="vitamins">Vitamins & Energy</button>
+        </div>
+      </div>
+
+      <!-- Medicine Products Grid -->
+      <div class="products-grid" id="products-grid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- Section 2: AI Medicine & Prescription Scanner -->
+    <section class="section" id="section-scanner">
+      <div class="section-header">
+        <div class="title-group">
+          <h2><span>🔍</span> Smart AI Medicine & Prescription Scanner</h2>
+          <p>Using Computer Vision & OCR to instantly identify handwriting, dosages, precautions, and stock.</p>
+        </div>
+        <div id="scanner-status-badge">
+          <span class="badge badge-cyan">Ready to Scan</span>
+        </div>
+      </div>
+
+      <div class="scanner-grid">
+        <!-- Left: Viewfinder & Controls -->
+        <div class="scanner-box">
+          <div class="scanner-viewfinder" id="scanner-viewfinder">
+            <img src="assets/sample_prescription.jpg" alt="Prescription Viewfinder" class="scanner-image-preview" id="scanner-preview-img">
+            <div class="scan-laser-line" id="scan-laser"></div>
+            <div class="scan-crosshairs"></div>
+          </div>
+
+          <div class="scanner-presets">
+            <div class="scanner-presets-label">
+              <span>⚡</span> Select Sample Document:
+            </div>
+            <div class="preset-buttons-group">
+              <button class="btn-preset active" data-preset="prescription">
+                <span>📝</span> Prescription Slip (St. Mary's)
+              </button>
+              <button class="btn-preset" data-preset="strip">
+                <span>💊</span> Blister Strip (Amoxicillin)
+              </button>
+            </div>
+          </div>
+
+          <div class="scanner-upload-row">
+            <label class="btn-secondary" style="font-size: 0.82rem; cursor: pointer; padding: 0.85rem 1.1rem; display: flex; align-items: center; gap: 0.4rem;">
+              <span>📁</span> Upload Custom Image
+              <input type="file" id="scanner-file-upload" accept="image/*" style="display: none;">
+            </label>
+            <button class="btn-scan-trigger" id="btn-start-scan">
+              <span>⚡</span> Run AI Deep Scan
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Recognition Results Breakdown -->
+        <div class="scanner-results-card">
+          <div class="result-status-header">
+            <div>
+              <h3 style="font-size: 1.15rem; color: #fff;">AI Neural Recognition Output</h3>
+              <p style="font-size: 0.8rem; color: var(--text-secondary);">Real-time Optical Character Recognition & Clinical Parsing</p>
+            </div>
+            <span class="badge badge-teal">MediFlow AI Vision v2.4</span>
+          </div>
+
+          <div id="scanner-results-content">
+            <!-- Populated dynamically by scanner.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: MediFlow AI Pharmacist (Interactive Doubt Solver) -->
+    <section class="section" id="section-chat">
+      <div class="section-header">
+        <div class="title-group">
+          <h2><span>🤖</span> MediFlow AI Pharmacist & Clinical Assistant</h2>
+          <p>Instant answers to medication doubts, dosage schedules, food timing, side effects, and dangerous drug interactions.</p>
+        </div>
+        <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
+          <div class="badge badge-teal badge-pulse">24/7 AI Pharmacist Online</div>
+          <button class="btn-chat-reset" id="btn-chat-clear" title="Clear Conversation History">
+            <span>🔄</span> Reset Chat
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Action Clinical Tools Bar -->
+      <div class="chat-quick-toolbar">
+        <div class="quick-tools-label">⚡ 1-Click Pharmacist Tools:</div>
+        <div class="quick-tools-buttons">
+          <button class="btn-chat-tool" onclick="window.mediFlowChat.auditCart()">
+            <span>🛡️</span> Audit My Cart Safety
+          </button>
+          <button class="btn-chat-tool" onclick="window.mediFlowApp.toggleToolPanel('interaction')">
+            <span>⚖️</span> Drug Interaction Checker
+          </button>
+          <button class="btn-chat-tool" onclick="window.mediFlowApp.toggleToolPanel('quickguide')">
+            <span>💊</span> Medicine Quick Guide
+          </button>
+          <button class="btn-chat-tool" onclick="window.mediFlowApp.toggleToolPanel('symptoms')">
+            <span>🤒</span> Symptom Relief Helper
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Tool Drawer: Drug Interaction Checker -->
+      <div class="tool-panel-box" id="tool-panel-interaction" style="display: none;">
+        <div class="tool-panel-header">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span>⚖️</span>
+            <strong>Check Drug-to-Drug Interaction & Contraindications</strong>
+          </div>
+          <button class="btn-close-tool" onclick="window.mediFlowApp.toggleToolPanel('interaction')">✕</button>
+        </div>
+        <div class="tool-panel-body">
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.85rem;">
+            Select two medications to verify if they can be safely consumed together, or if they risk toxicity or absorption interference:
+          </p>
+          <div class="interaction-select-grid">
+            <div class="select-group">
+              <label>Medicine 1:</label>
+              <select id="interaction-med-1" class="tool-select">
+                <option value="Dolo 650">Dolo 650 (Paracetamol 650mg)</option>
+                <option value="Augmentin 625 Duo">Augmentin 625 Duo (Amoxicillin + Clavulanate)</option>
+                <option value="Pan-D">Pan-D (Pantoprazole + Domperidone)</option>
+                <option value="Combiflam">Combiflam (Ibuprofen + Paracetamol)</option>
+                <option value="Cetirizine 10mg">Cetirizine 10mg</option>
+                <option value="Azithral 500">Azithral 500 (Azithromycin)</option>
+                <option value="Telma 40">Telma 40 (Telmisartan)</option>
+                <option value="Glycomet-GP 1 Forte">Glycomet-GP 1 Forte (Metformin)</option>
+                <option value="Becosules Performance">Becosules Performance (Multivitamins)</option>
+                <option value="Electral ORS">Electral ORS Powder</option>
+              </select>
+            </div>
+            <div class="select-group">
+              <label>Medicine 2:</label>
+              <select id="interaction-med-2" class="tool-select">
+                <option value="Combiflam">Combiflam (Ibuprofen + Paracetamol)</option>
+                <option value="Pan-D">Pan-D (Pantoprazole + Domperidone)</option>
+                <option value="Dolo 650">Dolo 650 (Paracetamol 650mg)</option>
+                <option value="Augmentin 625 Duo">Augmentin 625 Duo</option>
+                <option value="Cetirizine 10mg">Cetirizine 10mg</option>
+                <option value="Azithral 500">Azithral 500</option>
+                <option value="Alcohol">Alcohol / Alcoholic Beverages</option>
+                <option value="Becosules Performance">Becosules Performance</option>
+              </select>
+            </div>
+            <button class="btn-primary" style="height: 42px; padding: 0 1.25rem; font-size: 0.84rem;" onclick="window.mediFlowApp.runInteractionCheckFromTool()">
+              Check Compatibility ➔
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Tool Drawer: Medicine Quick Guide -->
+      <div class="tool-panel-box" id="tool-panel-quickguide" style="display: none;">
+        <div class="tool-panel-header">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span>💊</span>
+            <strong>Instant Medicine Quick Guide (No Typing Required)</strong>
+          </div>
+          <button class="btn-close-tool" onclick="window.mediFlowApp.toggleToolPanel('quickguide')">✕</button>
+        </div>
+        <div class="tool-panel-body">
+          <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.85rem;">
+            <label style="font-size: 0.82rem; font-weight: 600; color: #fff;">Choose Medicine:</label>
+            <select id="quickguide-med-select" class="tool-select" style="min-width: 240px;">
+              <option value="med-1">Dolo 650 (Fever & Pain)</option>
+              <option value="med-2">Augmentin 625 Duo (Antibiotic)</option>
+              <option value="med-3">Pan-D (Acidity & GERD)</option>
+              <option value="med-4">Azithral 500 (Infection / Throat)</option>
+              <option value="med-5">Cetirizine 10mg (Allergy & Cold)</option>
+              <option value="med-6">Glycomet-GP 1 (Diabetes / Sugar)</option>
+              <option value="med-7">Telma 40 (Blood Pressure / BP)</option>
+              <option value="med-8">Becosules Performance (Vitamins)</option>
+              <option value="med-9">Combiflam (Pain & Inflammation)</option>
+              <option value="med-10">Electral ORS (Dehydration / Diarrhea)</option>
+            </select>
+          </div>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="chat-quick-chip" onclick="window.mediFlowApp.askAboutSelectedMed('dosage')">
+              ⏱️ How to Take & Timing
+            </button>
+            <button class="chat-quick-chip" onclick="window.mediFlowApp.askAboutSelectedMed('food')">
+              🍽️ Food / Empty Stomach Rules
+            </button>
+            <button class="chat-quick-chip" onclick="window.mediFlowApp.askAboutSelectedMed('side_effects')">
+              ⚠️ Side Effects & Precautions
+            </button>
+            <button class="chat-quick-chip" onclick="window.mediFlowApp.askAboutSelectedMed('generic')">
+              💰 Cheaper Generic Bioequivalent
+            </button>
+            <button class="chat-quick-chip" onclick="window.mediFlowApp.askAboutSelectedMed('all')">
+              📋 Full Clinical Overview
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Tool Drawer: Symptom Relief Helper -->
+      <div class="tool-panel-box" id="tool-panel-symptoms" style="display: none;">
+        <div class="tool-panel-header">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span>🤒</span>
+            <strong>Quick Symptom Guidance & First-Aid Protocol</strong>
+          </div>
+          <button class="btn-close-tool" onclick="window.mediFlowApp.toggleToolPanel('symptoms')">✕</button>
+        </div>
+        <div class="tool-panel-body">
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+            Select a symptom for clinical pharmacist recommendations and red-flag warning signs:
+          </p>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="chat-quick-chip" onclick="window.mediFlowChat.askQuestion('What should I take for mild to moderate fever and body ache?')">
+              🌡️ Fever & Body Ache
+            </button>
+            <button class="chat-quick-chip" onclick="window.mediFlowChat.askQuestion('What is the best medicine for severe acidity and heartburn?')">
+              🌿 Acidity, Gas & Heartburn
+            </button>
+            <button class="chat-quick-chip" onclick="window.mediFlowChat.askQuestion('How to treat runny nose, sneezing, and allergy?')">
+              🤧 Sneezing & Runny Nose
+            </button>
+            <button class="chat-quick-chip" onclick="window.mediFlowChat.askQuestion('What can I take for tension headache or migraine relief?')">
+              🧠 Headache & Migraine
+            </button>
+            <button class="chat-quick-chip" onclick="window.mediFlowChat.askQuestion('What to do for loose motions, vomiting, and dehydration?')">
+              💧 Diarrhea & Dehydration
+            </button>
+            <button class="chat-quick-chip" onclick="window.mediFlowChat.askQuestion('Can I take Paracetamol during pregnancy?')">
+              🤰 Pregnancy Medication Safety
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ai-chat-layout">
+        <!-- Sidebar: Suggestions & Quick Questions -->
+        <div class="ai-sidebar">
+          <div class="ai-avatar-header">
+            <div class="ai-bot-avatar">🤖</div>
+            <div>
+              <h4 style="font-size: 1rem; color: #fff;">Dr. MediFlow AI</h4>
+              <p style="font-size: 0.75rem; color: #34d399; font-weight: 600;">✓ Certified Clinical AI Pharmacist</p>
+            </div>
+          </div>
+
+          <!-- Real-Time Cart Interaction Card in Sidebar -->
+          <div class="chat-cart-preview" id="chat-cart-summary">
+            <!-- Rendered dynamically by chat.js -->
+          </div>
+
+          <!-- Question Category Filter Pills -->
+          <div class="chat-filter-strip">
+            <button class="chat-filter-chip active" data-category="all">All</button>
+            <button class="chat-filter-chip" data-category="safety">⚠️ Safety</button>
+            <button class="chat-filter-chip" data-category="dosage">⏰ Timing</button>
+            <button class="chat-filter-chip" data-category="generics">💰 Savings</button>
+          </div>
+
+          <div class="ai-prompt-suggestions" id="ai-suggestions-list">
+            <button class="suggestion-pill" data-category="safety" data-query="Can I take Paracetamol with Ibuprofen?">
+              <span>💊</span> Can I take Paracetamol with Ibuprofen?
+            </button>
+            <button class="suggestion-pill" data-category="safety" data-query="Can I take Dolo with Combiflam?">
+              <span>🚨</span> Can I take Dolo with Combiflam?
+            </button>
+            <button class="suggestion-pill" data-category="dosage" data-query="What is the correct timing for Amoxicillin?">
+              <span>⏰</span> What is correct timing for Amoxicillin?
+            </button>
+            <button class="suggestion-pill" data-category="dosage" data-query="Should Pantoprazole be taken on empty stomach?">
+              <span>🌿</span> Take Pantoprazole on empty stomach?
+            </button>
+            <button class="suggestion-pill" data-category="safety" data-query="What to do if I missed a dose of medicine?">
+              <span>⚠️</span> What to do if I missed a dose?
+            </button>
+            <button class="suggestion-pill" data-category="safety" data-query="Can I drink alcohol with Paracetamol or Antibiotics?">
+              <span>🍷</span> Can I drink alcohol with medicines?
+            </button>
+            <button class="suggestion-pill" data-category="dosage" data-query="Does Cetirizine cause severe drowsiness?">
+              <span>🤧</span> Does Cetirizine cause drowsiness?
+            </button>
+            <button class="suggestion-pill" data-category="generics" data-query="Is generic Paracetamol identical to Dolo 650?">
+              <span>🔬</span> Is generic Paracetamol same as Dolo?
+            </button>
+            <button class="suggestion-pill" data-category="safety" data-query="Can I take Augmentin with Pan-D?">
+              <span>🛡️</span> Can I take Augmentin with Pan-D?
+            </button>
+          </div>
+
+          <div class="chat-disclaimer-box">
+            🛡️ <strong>Safety Disclaimer:</strong> MediFlow AI provides verified pharmaceutical education based on CDSCO & WHO monographs. In acute medical emergencies, immediately contact your hospital or physician.
+          </div>
+        </div>
+
+        <!-- Chat Window -->
+        <div class="ai-chat-window">
+          <div class="chat-messages-container" id="chat-messages">
+            <!-- Welcome message -->
+            <div class="chat-bubble bot">
+              <div class="chat-avatar-icon">🤖</div>
+              <div class="bubble-content">
+                <h3>Hello! I am Dr. MediFlow, your AI Pharmacist.</h3>
+                <p>
+                  I'm here to ensure you take medications safely, prevent dangerous drug interactions, understand food timing, and save money with verified generic bioequivalents.
+                </p>
+                <div class="chat-features-strip">
+                  <div class="feature-tag">🛡️ Cart Safety Audit</div>
+                  <div class="feature-tag">⚖️ Drug-Drug Interactions</div>
+                  <div class="feature-tag">🍽️ Food & Empty Stomach Rules</div>
+                  <div class="feature-tag">💰 Generic Cost Savers</div>
+                </div>
+                <p style="margin-top: 0.75rem; color: #38bdf8; font-size: 0.85rem;">
+                  👇 Try tapping one of the quick suggestions below, or speak/type your question!
+                </p>
+                <div class="chat-welcome-chips">
+                  <button class="chat-quick-chip" onclick="window.mediFlowChat.auditCart()">
+                    🛡️ Audit My Cart Safety
+                  </button>
+                  <button class="chat-quick-chip" onclick="window.mediFlowChat.askQuestion('Can I take Dolo with Combiflam?')">
+                    🚨 Dolo + Combiflam Safety Check
+                  </button>
+                  <button class="chat-quick-chip" onclick="window.mediFlowChat.askQuestion('Should Pantoprazole be taken on empty stomach?')">
+                    🌿 Pantoprazole Food Timing
+                  </button>
+                  <button class="chat-quick-chip" onclick="window.mediFlowChat.askQuestion('Is generic Paracetamol identical to Dolo 650?')">
+                    💰 Save 60% with Generic Paracetamol
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Prompts Strip above input -->
+          <div class="chat-prompt-strip">
+            <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">⚡ Quick Ask:</span>
+            <button class="chat-quick-chip" onclick="window.mediFlowChat.askQuestion('Can I take Paracetamol with Ibuprofen?')">Dolo + Ibuprofen?</button>
+            <button class="chat-quick-chip" onclick="window.mediFlowChat.askQuestion('What to do if I missed a dose?')">Missed dose?</button>
+            <button class="chat-quick-chip" onclick="window.mediFlowChat.askQuestion('Can I drink alcohol with medicines?')">Alcohol safety?</button>
+            <button class="chat-quick-chip" onclick="window.mediFlowChat.askQuestion('Does Cetirizine cause severe drowsiness?')">Cetirizine sleepiness?</button>
+            <button class="chat-quick-chip" onclick="window.mediFlowChat.askQuestion('What should I take for mild to moderate fever?')">Fever relief</button>
+          </div>
+
+          <!-- Input Bar -->
+          <div class="chat-input-bar">
+            <button class="btn-chat-mic" id="btn-chat-mic" title="Speak Question (Voice Input)" aria-label="Voice Input">
+              <span class="mic-icon">🎙️</span>
+            </button>
+            <input type="text" id="chat-input" class="chat-input-field" placeholder="Ask Dr. MediFlow AI any medicine doubt (e.g. 'Can I take Dolo with Combiflam?')...">
+            <button class="btn-chat-send" id="btn-chat-send" aria-label="Send Message" title="Send Question">
+              <span>➤</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         Section 4: Where to Get & Pharmacy Stock Locator
+         ---------------------------------------------------------------------- -->
+    <section class="section" id="section-locator">
+      <div class="section-header">
+        <div class="title-group">
+          <h2><span>📍</span> "Where to Get" — Nearby Pharmacy Stock Locator</h2>
+          <p>Find which pharmacies in your area have your exact medicine in stock with distance, pricing & hours.</p>
+        </div>
+        <div class="badge badge-cyan">4 Local Stores Connected</div>
+      </div>
+
+      <div class="pharmacy-locator-grid" id="pharmacy-stores-grid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------
+         Section 5: Live Order & Delivery Tracker
+         ---------------------------------------------------------------------- -->
+    <section class="section" id="section-delivery">
+      <div class="section-header">
+        <div class="title-group">
+          <h2><span>🚚</span> Live Medicine Delivery & Rider Tracking</h2>
+          <p>Track your medicine dispatch in real-time with temperature-safe packing and secure OTP handover.</p>
+        </div>
+        <button class="btn-secondary" onclick="window.mediFlowApp.advanceDeliveryStep()" style="font-size: 0.8rem; padding: 0.45rem 0.95rem;">
+          ⚡ Update Order Status
+        </button>
+      </div>
+
+      <div class="tracking-wrapper">
+        <div class="tracking-header-bar">
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase;">Active Prescription Order</div>
+            <h3 style="font-size: 1.4rem; color: #fff;" id="tracking-order-id">#MED-92418</h3>
+          </div>
+          <div style="display: flex; gap: 1.5rem; align-items: center;">
+            <div style="text-align: right;">
+              <div style="font-size: 0.75rem; color: var(--text-secondary);">Estimated Delivery</div>
+              <div style="font-size: 1.25rem; font-weight: 800; color: #38bdf8;" id="eta-countdown-mins">14 mins</div>
+            </div>
+            <div style="text-align: right; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); padding: 0.4rem 0.8rem; border-radius: var(--radius-sm);">
+              <div style="font-size: 0.72rem; color: #34d399; font-weight: 700;">Delivery OTP</div>
+              <div style="font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: 2px;" id="tracking-order-otp">4829</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-Step Progress Stepper -->
+        <div class="tracking-stepper">
+          <div class="step-item completed">
+            <div class="step-node">✓</div>
+            <div class="step-label">Order Confirmed</div>
+            <div class="step-time">6:45 PM</div>
+          </div>
+          <div class="step-item completed">
+            <div class="step-node">📦</div>
+            <div class="step-label">Verified & Packed</div>
+            <div class="step-time">6:48 PM</div>
+          </div>
+          <div class="step-item active">
+            <div class="step-node">🛵</div>
+            <div class="step-label">Out for Delivery</div>
+            <div class="step-time">In Transit</div>
+          </div>
+          <div class="step-item">
+            <div class="step-node">🏠</div>
+            <div class="step-label">Doorstep Arrival</div>
+            <div class="step-time">ETA ~7:02 PM</div>
+          </div>
+        </div>
+
+        <!-- Map & Rider Card -->
+        <div class="delivery-map-container">
+          <div class="simulated-map-canvas-box">
+            <canvas id="delivery-map-canvas" width="600" height="340" class="simulated-map-bg"></canvas>
+            <div class="map-overlay-info">
+              <span class="badge-pulse"></span>
+              <span style="font-size: 0.8rem; color: #fff; font-weight: 600;">Live GPS Beacon Active • Speed: 28 km/h</span>
+            </div>
+          </div>
+
+          <div class="delivery-details-sidebar">
+            <div>
+              <div class="rider-profile">
+                <div class="rider-avatar">🛵</div>
+                <div>
+                  <h4 style="font-size: 1.05rem; color: #fff;" id="rider-name">Rahul Sharma</h4>
+                  <p style="font-size: 0.8rem; color: var(--text-secondary);" id="rider-vehicle">Ather 450X EV (KA-05-EM-4412)</p>
+                  <span style="font-size: 0.75rem; color: #fbbf24;">⭐ 4.9 (1,240 Deliveries)</span>
+                </div>
+              </div>
+
+              <div style="margin-bottom: 1rem; font-size: 0.84rem; line-height: 1.5; color: var(--text-secondary);">
+                <div>📍 <strong>Delivery Address:</strong> Campus Hostel 304, University North Block</div>
+                <div style="margin-top: 0.35rem;">📦 <strong>Medications in Package:</strong> Dolo 650, Pan-D (Cold Sealed)</div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem;">
+              <a href="tel:+919845077123" class="btn-primary" style="flex: 1; justify-content: center; padding: 0.65rem; font-size: 0.82rem;">
+                📞 Call Delivery Partner
+              </a>
+              <button class="btn-secondary" style="padding: 0.65rem 0.9rem; font-size: 0.82rem;" onclick="showToast('Rider notified: Please leave medicine at hostel reception if delayed.')">
+                💬 Note
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Dosage & Schedule Manager -->
+    <section class="section" id="section-schedule">
+      <div class="section-header">
+        <div class="title-group">
+          <h2><span>⏰</span> Smart Dosage Reminder & Pill Schedule</h2>
+          <p>Never miss a dose. Track daily medications, mark pills taken, and maintain adherence.</p>
+        </div>
+        <div class="badge badge-emerald">Daily Adherence Active</div>
+      </div>
+
+      <div class="schedule-grid">
+        <!-- Daily Timeline -->
+        <div class="schedule-timeline">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-card);">
+            <h3 style="font-size: 1.15rem; color: #fff;">Today's Medicine Regimen</h3>
+            <span style="font-size: 0.82rem; color: var(--accent-cyan); font-weight: 600;">Saturday, 17 Oct 2026</span>
+          </div>
+
+          <div id="schedule-items-list">
+            <!-- Rendered dynamically by app.js -->
+          </div>
+        </div>
+
+        <!-- Adherence Score & Quick Add -->
+        <div class="schedule-stats-sidebar">
+          <div class="adherence-card">
+            <h4 style="font-size: 0.95rem; color: #fff;">Medication Adherence</h4>
+            <div class="circular-progress-wrap">
+              <svg viewBox="0 0 36 36" style="width: 100%; height: 100%; transform: rotate(-90deg);">
+                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3" />
+                <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="75, 100" />
+              </svg>
+              <div class="adherence-percent">
+                <span id="adherence-score" style="color:#34d399;">75%</span>
+                <span style="font-size: 0.65rem; color: var(--text-secondary); font-weight: 500;">On Track</span>
+              </div>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-secondary);">
+              3 of 4 doses completed on schedule today. Great job!
+            </p>
+          </div>
+
+          <div style="background: var(--bg-card); border: 1px solid var(--border-card); border-radius: var(--radius-lg); padding: 1.25rem;">
+            <h4 style="font-size: 0.95rem; color: #fff; margin-bottom: 0.5rem;">🔔 Smart Reminders</h4>
+            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.45;">
+              MediFlow syncs with your phone notifications to remind you 10 minutes before every meal dose.
+            </p>
+            <button class="btn-primary" style="width: 100%; justify-content: center; font-size: 0.82rem; padding: 0.6rem;" onclick="showToast('Reminder alert: Time to take your Pantoprazole dose!')">
+              🔔 Send Reminder Alert
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Cart Slide-Over Drawer -->
+  <div class="cart-drawer-backdrop" id="cart-drawer-backdrop">
+    <div class="cart-drawer" id="cart-drawer">
+      <div class="cart-drawer-header">
+        <h3 style="font-size: 1.2rem; color: #fff; display: flex; align-items: center; gap: 0.5rem;">
+          <span>🛒</span> Your Medicine Order
+        </h3>
+        <button class="btn-close-modal" id="btn-close-cart" aria-label="Close Cart">✕</button>
+      </div>
+
+      <div class="cart-items-list" id="cart-items-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <div class="cart-drawer-footer">
+        <div class="bill-row">
+          <span>Items Subtotal</span>
+          <span id="cart-subtotal">$2.22</span>
+        </div>
+        <div class="bill-row">
+          <span>Express 15-Min Delivery</span>
+          <span style="color: #34d399;">$1.50</span>
+        </div>
+        <div class="bill-row">
+          <span>Healthcare Member Discount</span>
+          <span style="color: #38bdf8;">-$0.50 (Applied)</span>
+        </div>
+        <div class="bill-row total">
+          <span>Total Payable</span>
+          <span id="cart-total" style="color: #fff;">$3.22</span>
+        </div>
+
+        <div style="margin: 1rem 0; font-size: 0.78rem; background: var(--bg-secondary); padding: 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--border-card);">
+          <div style="font-weight: 700; color: #fff; margin-bottom: 0.2rem;">📍 Deliver To:</div>
+          <div style="color: var(--text-secondary);">University Campus Hostel, Room 304, Main Road</div>
+        </div>
+
+        <button class="btn-primary" style="width: 100%; justify-content: center; padding: 0.85rem;" onclick="window.mediFlowApp.processCheckout()">
+          ⚡ Place Express Order & Track Live ➔
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Medicine Clinical Detail Modal -->
+  <div class="modal-backdrop" id="details-modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 style="font-size: 1.15rem; color: #fff;">Medicine Clinical Sheet</h3>
+        <button class="btn-close-modal" id="btn-close-details" aria-label="Close Details">✕</button>
+      </div>
+      <div id="details-modal-content">
+        <!-- Injected dynamically by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Network Telemetry & Activity Modal -->
+  <div class="modal-backdrop" id="telemetry-modal-backdrop">
+    <div class="modal-dialog" style="max-width: 560px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.65rem;">
+          <span class="live-dot-pulse" style="width: 10px; height: 10px;"></span>
+          <h3 style="font-size: 1.15rem; color: #fff; margin: 0;">MediFlow Live Network Telemetry</h3>
+        </div>
+        <button class="btn-close-modal" id="btn-close-telemetry" onclick="window.mediFlowApp.toggleTelemetryModal(false)" aria-label="Close Telemetry">✕</button>
+      </div>
+      <div class="telemetry-modal-body">
+        <!-- User's own real connection card -->
+        <div class="telemetry-user-session-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="font-size: 1.1rem;">👤</span>
+              <strong style="color: #fff; font-size: 0.95rem;">Your Live Connected Session</strong>
+            </div>
+            <span class="badge badge-emerald badge-pulse">Online & Synced</span>
+          </div>
+          <div class="user-session-grid">
+            <div><span class="session-label">Session ID:</span> <span class="session-val" id="my-session-id">MF-8924</span></div>
+            <div><span class="session-label">Current Action:</span> <span class="session-val" id="my-current-action" style="color: var(--accent-cyan);">Browsing Store</span></div>
+            <div><span class="session-label">Active Browser Tabs:</span> <span class="session-val" id="my-open-tabs" style="color: #38bdf8;">1 Tab Active</span></div>
+            <div><span class="session-label">Network Latency:</span> <span class="session-val" id="my-modal-ping" style="color: #34d399;">22ms (Optimal)</span></div>
+          </div>
+        </div>
+
+        <!-- Overall Network Stats -->
+        <div class="telemetry-network-stats">
+          <div class="stat-box">
+            <div class="stat-number" id="modal-user-count" style="color: var(--accent-cyan);">1,842</div>
+            <div class="stat-desc">Active Patients Online</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number" id="modal-orders-today" style="color: #34d399;">438</div>
+            <div class="stat-desc">Express Dispatches Today</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number" id="modal-ai-queries" style="color: #8b5cf6;">1,219</div>
+            <div class="stat-desc">AI Pharmacist Queries</div>
+          </div>
+        </div>
+
+        <!-- Real-time Regional Distribution -->
+        <div class="telemetry-regional-section">
+          <h4 style="font-size: 0.85rem; color: #fff; margin-bottom: 0.5rem;">📍 Active Regional Distribution (Nearby Pharmacy Hubs)</h4>
+          <div class="region-bars">
+            <div class="region-row">
+              <span>Bangalore Hub (34%)</span>
+              <div class="region-bar-track"><div class="region-bar-fill" id="bar-bangalore" style="width: 34%; background: #06b6d4;"></div></div>
+              <span id="region-bangalore-count">626</span>
+            </div>
+            <div class="region-row">
+              <span>Mumbai Central (28%)</span>
+              <div class="region-bar-track"><div class="region-bar-fill" id="bar-mumbai" style="width: 28%; background: #10b981;"></div></div>
+              <span id="region-mumbai-count">515</span>
+            </div>
+            <div class="region-row">
+              <span>Delhi NCR (22%)</span>
+              <div class="region-bar-track"><div class="region-bar-fill" id="bar-delhi" style="width: 22%; background: #8b5cf6;"></div></div>
+              <span id="region-delhi-count">405</span>
+            </div>
+            <div class="region-row">
+              <span>Campus / Other Zones (16%)</span>
+              <div class="region-bar-track"><div class="region-bar-fill" id="bar-other" style="width: 16%; background: #f59e0b;"></div></div>
+              <span id="region-other-count">296</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-time Live Activity Stream -->
+        <div class="telemetry-feed-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+            <h4 style="font-size: 0.85rem; color: #fff; margin: 0;">⚡ Live Patient & Network Activity Stream</h4>
+            <span style="font-size: 0.72rem; color: var(--accent-cyan);" class="badge-pulse">Live Feed</span>
+          </div>
+          <div class="telemetry-feed-list" id="telemetry-feed-list">
+            <!-- Dynamically populated with live activity events -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong style="color: #fff;">MediFlow</strong> — Digital Healthcare & Smart Pharmacy Network
+        <div style="font-size: 0.75rem; margin-top: 0.2rem; color: var(--text-muted);">
+          All medications verified with registered pharmacists and certified local pharmacy partners.
+        </div>
+      </div>
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <span class="badge badge-teal">Verified Pharmacy Platform</span>
+        <span class="badge badge-cyan">v2.4 Production Build</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating AI Assistant Quick Drawer -->
+  <div class="floating-ai-drawer" id="floating-ai-drawer">
+    <div class="floating-drawer-header">
+      <div style="display: flex; align-items: center; gap: 0.65rem;">
+        <div class="floating-drawer-avatar">🤖</div>
+        <div>
+          <h4 style="font-size: 0.95rem; color: #fff; margin: 0;">Dr. MediFlow AI</h4>
+          <span style="font-size: 0.72rem; color: #34d399; font-weight: 600;">✓ 24/7 AI Pharmacist Online</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 0.4rem; align-items: center;">
+        <button class="btn-drawer-ctrl" onclick="window.mediFlowApp.switchSection('chat'); window.mediFlowApp.toggleFloatingChat(false);" title="Expand Full Page View">
+          ↗ Full View
+        </button>
+        <button class="btn-drawer-ctrl close" onclick="window.mediFlowApp.toggleFloatingChat(false)" title="Close Drawer">
+          ✕
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick action chips in floating drawer -->
+    <div class="floating-drawer-chips">
+      <button class="chat-quick-chip" onclick="window.mediFlowApp.switchSection('chat'); window.mediFlowApp.toggleFloatingChat(false); setTimeout(() => window.mediFlowChat.auditCart(), 350);">🛡️ Audit My Cart</button>
+      <button class="chat-quick-chip" onclick="window.mediFlowApp.switchSection('chat'); window.mediFlowApp.toggleFloatingChat(false); setTimeout(() => window.mediFlowChat.askQuestion('Can I take Dolo with Combiflam?'), 350);">Dolo + Combiflam?</button>
+      <button class="chat-quick-chip" onclick="window.mediFlowApp.switchSection('chat'); window.mediFlowApp.toggleFloatingChat(false); setTimeout(() => window.mediFlowChat.askQuestion('Should Pantoprazole be taken on empty stomach?'), 350);">Pan-D Timing?</button>
+      <button class="chat-quick-chip" onclick="window.mediFlowApp.switchSection('chat'); window.mediFlowApp.toggleFloatingChat(false); setTimeout(() => window.mediFlowChat.askQuestion('Is generic Paracetamol identical to Dolo 650?'), 350);">Generic Savings</button>
+    </div>
+
+    <div class="floating-drawer-body">
+      <div class="floating-welcome-card">
+        <p style="font-size: 0.85rem; color: #e2e8f0; line-height: 1.45; margin-bottom: 0.5rem;">
+          👋 Need quick guidance on dosages, meal timing, or drug interactions? Ask me anytime without losing your place!
+        </p>
+        <div style="font-size: 0.75rem; color: var(--accent-cyan);">
+          💡 Tip: Click <strong>"Full View ↗"</strong> for the complete clinical dashboard & interaction checker.
+        </div>
+      </div>
+    </div>
+
+    <div class="floating-drawer-footer">
+      <button class="btn-chat-mic" style="width: 36px; height: 36px;" onclick="window.mediFlowApp.switchSection('chat'); window.mediFlowApp.toggleFloatingChat(false); setTimeout(() => window.mediFlowChat.toggleVoiceInput(), 350);" title="Voice Input">
+        🎙️
+      </button>
+      <input type="text" id="floating-drawer-input" class="chat-input-field" placeholder="Ask quick medicine doubt..." style="padding: 0.6rem 0.95rem; font-size: 0.84rem;">
+      <button class="btn-chat-send" style="width: 36px; height: 36px; font-size: 0.85rem;" onclick="
+        const input = document.getElementById('floating-drawer-input');
+        if (input && input.value.trim()) {
+          const val = input.value.trim();
+          input.value = '';
+          window.mediFlowApp.switchSection('chat');
+          window.mediFlowApp.toggleFloatingChat(false);
+          setTimeout(() => window.mediFlowChat.askQuestion(val), 350);
+        }
+      " title="Send Question">
+        ➤
+      </button>
+    </div>
+  </div>
+
+  <!-- Floating AI Assistant Launcher -->
+  <button class="floating-ai-trigger" onclick="window.mediFlowApp.toggleFloatingChat()" aria-label="Ask Dr. MediFlow AI" title="24/7 AI Pharmacist Online">
+    <span class="floating-ai-avatar">🤖</span>
+    <span class="floating-ai-text">Ask Dr. MediFlow AI</span>
+    <span class="badge-pulse" style="margin-left: 2px;"></span>
+  </button>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/scanner.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
